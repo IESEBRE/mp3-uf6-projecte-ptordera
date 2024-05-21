@@ -55,9 +55,9 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
         JTable taula = view.getTaula();
         taula.setModel(this.modelComponentsVisuals.getModelTaulaVideojoc());
         //Amago la columna que conté l'objecte alumne
-        taula.getColumnModel().getColumn(3).setMinWidth(0);
-        taula.getColumnModel().getColumn(3).setMaxWidth(0);
-        taula.getColumnModel().getColumn(3).setPreferredWidth(0);
+//        taula.getColumnModel().getColumn(3).setMinWidth(0);
+//        taula.getColumnModel().getColumn(3).setMaxWidth(0);
+//        taula.getColumnModel().getColumn(3).setPreferredWidth(0);
 
         //Fixem el model de la taula de matrícules
         JTable taulaEqu = view.getTaulaEqu();
@@ -78,7 +78,7 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
 
         // Fill the table model with data from the collection
         for (Videojoc videojoc : all) {
-            modelTaulaVideojoc.addRow(new Object[]{videojoc.getTitol(), videojoc.getPegi(), true, videojoc});
+            modelTaulaVideojoc.addRow(new Object[]{videojoc.getTitol(), videojoc.getPegi(), videojoc.isMultijugador(), videojoc});
         }
     }
 
@@ -111,7 +111,7 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
                         JTextField campPegi = view.getCampPegi();
                         JCheckBox caixaMultijugador = view.getCaixaMultijugador();
 
-                        if (pestanyes.getSelectedIndex() == 0) {        //Si estem a la pestanya de l'alumne
+                        if (pestanyes.getSelectedIndex() == 0) {        //Si estem a la pestanya del videojoc
                             //Comprovem que totes les caselles continguen informació
                             if (campTitol.getText().isBlank() || campPegi.getText().isBlank()) {
                                 JOptionPane.showMessageDialog(null, "Falta omplir alguna dada!!");
@@ -198,10 +198,38 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
                                     }
                                 }
                             } else {
-                                JOptionPane.showMessageDialog(null, "¡No se ha seleccionado ningún videojuego para modificar!");
+                                JOptionPane.showMessageDialog(null, "No s'ha seleccionat cap videojoc per modificar!");
                             }
                         } else { // Si estamos en la pestaña de la matrícula
                             // Aquí puedes agregar el código para modificar la matrícula si es necesario
+                        }
+                    }
+                }
+        );
+
+        view.getBorrarButton().addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (pestanyes.getSelectedIndex() == 0) { // Si estem a la pestanya de videojoc
+                            int filaSel = taula.getSelectedRow();
+                            if (filaSel != -1) { // Tenemos una fila seleccionada
+                                Videojoc vj = (Videojoc) model.getValueAt(filaSel, 3);
+                                try {
+                                    dadesVideojocs.delete(vj);
+                                    model.removeRow(filaSel);
+                                    //Posem els camps en blanc
+                                    campTitol.setText("");
+                                    campPegi.setText("");
+                                    caixaMultijugador.setSelected(false);
+                                } catch (DAOException ex) {
+                                    setExcepcio(new DAOException(1));
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "No s'ha seleccionat cap videojoc per borrar!");
+                            }
+                        } else { // Si estamos en la pestaña de la matrícula
+                            // Aquí puedes agregar el código para borrar la matrícula si es necesario
                         }
                     }
                 }
