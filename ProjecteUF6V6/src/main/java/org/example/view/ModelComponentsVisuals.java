@@ -1,36 +1,54 @@
 package org.example.view;
 
-import org.example.model.entities.Alumne;
+import org.example.model.entities.Videojoc;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Classe ModelComponentsVisuals que gestiona els components visuals del model.
+ */
 public class ModelComponentsVisuals {
 
-    private DefaultTableModel modelTaulaAlumne;
-    private DefaultTableModel modelTaulaMat;
-    private ComboBoxModel<Alumne.Matricula.Modul> comboBoxModel;
+    private DefaultTableModel modelTaulaVideojoc;
+    private DefaultTableModel modelTaulaEqu;
+    private ComboBoxModel<Videojoc.Equip.Regio> comboBoxModel;
 
     //Getters
 
-
-    public ComboBoxModel<Alumne.Matricula.Modul> getComboBoxModel() {
+    /**
+     * Mètode per obtenir el model del comboBox.
+     * @return El model del comboBox.
+     */
+    public ComboBoxModel<Videojoc.Equip.Regio> getComboBoxModel() {
         return comboBoxModel;
     }
 
-    public DefaultTableModel getModelTaulaAlumne() {
-        return modelTaulaAlumne;
+    /**
+     * Mètode per obtenir el model de la taula de videojocs.
+     * @return El model de la taula de videojocs.
+     */
+    public DefaultTableModel getModelTaulaVideojoc() {
+        return modelTaulaVideojoc;
     }
 
-    public DefaultTableModel getModelTaulaMat() {
-        return modelTaulaMat;
+    /**
+     * Mètode per obtenir el model de la taula d'equips.
+     * @return El model de la taula d'equips.
+     */
+    public DefaultTableModel getModelTaulaEqu() {
+        return modelTaulaEqu;
     }
 
+    /**
+     * Constructor de la classe ModelComponentsVisuals.
+     * Inicialitza els models de les taules i el model del comboBox.
+     */
     public ModelComponentsVisuals() {
 
 
         //Anem a definir l'estructura de la taula dels alumnes
-        modelTaulaAlumne =new DefaultTableModel(new Object[]{"Nom","Pes","És alumne?","Object"},0){
+        modelTaulaVideojoc =new DefaultTableModel(new Object[]{"Titol","PEGI","És multijugador?","Object","ID"},0){
             /**
              * Returns true regardless of parameter values.
              *
@@ -59,6 +77,10 @@ public class ModelComponentsVisuals {
                         return Double.class;
                     case 2:
                         return Boolean.class;
+                    case 3:
+                        return Videojoc.class;
+                    case 4:
+                        return Long.class;
                     default:
                         return Object.class;
                 }
@@ -69,31 +91,23 @@ public class ModelComponentsVisuals {
 
 
         //Anem a definir l'estructura de la taula de les matrícules
-        modelTaulaMat =new DefaultTableModel(new Object[]{"MP","Nota"},0){
-            /**
-             * Returns true regardless of parameter values.
-             *
-             * @param row    the row whose value is to be queried
-             * @param column the column whose value is to be queried
-             * @return true
-             * @see #setValueAt
-             */
+        modelTaulaEqu = new DefaultTableModel(new Object[]{"Regió", "Nom", "id_equip", "videojoc_id"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-
-                //Fem que TOTES les cel·les de la columna 1 de la taula es puguen editar
-                //if(column==1) return true;
                 return false;
             }
 
-            //Permet definir el tipo de cada columna
             @Override
             public Class getColumnClass(int column) {
                 switch (column) {
                     case 0:
-                        return Alumne.Matricula.Modul.class;
+                        return Videojoc.Equip.Regio.class;
                     case 1:
-                        return Integer.class;
+                        return String.class;
+                    case 2:
+                        return Long.class;
+                    case 3:
+                        return Long.class;
                     default:
                         return Object.class;
                 }
@@ -103,7 +117,7 @@ public class ModelComponentsVisuals {
 
 
         //Estructura del comboBox
-        comboBoxModel=new DefaultComboBoxModel<>(Alumne.Matricula.Modul.values());
+        comboBoxModel=new DefaultComboBoxModel<>(Videojoc.Equip.Regio.values());
 
 
 

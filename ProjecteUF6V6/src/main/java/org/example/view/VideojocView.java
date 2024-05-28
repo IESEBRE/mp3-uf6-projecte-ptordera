@@ -2,36 +2,40 @@ package org.example.view;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class MatriculaView extends JFrame{
+public class VideojocView extends JFrame{
     private JTabbedPane pestanyes;
     private JTable taula;
     private JScrollPane scrollPane1;
     private JButton insertarButton;
     private JButton modificarButton;
     private JButton borrarButton;
-    private JTextField campNom;
-    private JTextField campPes;
-    private JCheckBox caixaAlumne;
+    private JTextField campTitol;
+    private JTextField campPegi;
+    private JCheckBox caixaMultijugador;
     private JPanel panel;
-    private JTable taulaMat;
-    private JComboBox comboMP;
-    private JTextField campNota;
+    private JTable taulaEqu;
+    private JComboBox comboRegio;
+    private JTextField campNom;
     //private JTabbedPane PanelPestanya;
 
     //Getters
 
 
-    public JTable getTaulaMat() {
-        return taulaMat;
+    public JTable getTaulaEqu() {
+        return taulaEqu;
     }
 
-    public JComboBox getComboMP() {
-        return comboMP;
+    public JComboBox getComboRg() {
+        return comboRegio;
     }
 
-    public JTextField getCampNota() {
-        return campNota;
+    public JTextField getCampNom() {
+        return campNom;
     }
 
     public JTabbedPane getPestanyes() {
@@ -54,21 +58,21 @@ public class MatriculaView extends JFrame{
         return insertarButton;
     }
 
-    public JTextField getCampNom() {
-        return campNom;
+    public JTextField getCampTitol() {
+        return campTitol;
     }
 
-    public JTextField getCampPes() {
-        return campPes;
+    public JTextField getCampPegi() {
+        return campPegi;
     }
 
-    public JCheckBox getCaixaAlumne() {
-        return caixaAlumne;
+    public JCheckBox getCaixaMultijugador() {
+        return caixaMultijugador;
     }
 
 
     //Constructor de la classe
-    public MatriculaView() {
+    public VideojocView() {
 
 
         //Per poder vore la finestra

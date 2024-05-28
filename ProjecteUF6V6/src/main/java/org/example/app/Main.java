@@ -2,8 +2,8 @@ package org.example.app;
 
 import org.example.controller.Controller;
 import org.example.model.exceptions.DAOException;
-import org.example.model.impls.AlumneDAOJDBCOracleImpl;
-import org.example.view.MatriculaView;
+import org.example.model.impls.VideojocDAOJDBCOracleImpl;
+import org.example.view.VideojocView;
 
 import javax.swing.*;
 import java.util.Locale;
@@ -18,7 +18,11 @@ public class Main {
             public void run() {
                 //Definim la cultura de la nostra aplicació
                 Locale.setDefault(new Locale("ca","ES"));
-               new Controller(new AlumneDAOJDBCOracleImpl(), new MatriculaView());
+                try {
+                    new Controller(new VideojocDAOJDBCOracleImpl(), new VideojocView());
+                } catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
         });
